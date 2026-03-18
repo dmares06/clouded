@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+*.swp
+*~
+
+# Xcode
+cloudapp/build/
+cloudapp/DerivedData/
+*.xcuserdata/
+*.xcworkspace/xcuserdata/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+xcuserdata/
+
+# Next.js / Node
+landing/node_modules/
+landing/.next/
+landing/out/
+landing/.env
+landing/.env.local
+landing/.env.*.local
+
+# Package managers
+landing/pnpm-debug.log*
+landing/npm-debug.log*
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace

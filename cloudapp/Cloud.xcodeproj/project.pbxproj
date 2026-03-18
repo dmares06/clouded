@@ -1,0 +1,359 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* CloudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001; };
+		A10000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002; };
+		A10000000000000000000003 /* NotchPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003; };
+		A10000000000000000000004 /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004; };
+		A10000000000000000000005 /* UpNextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005; };
+		A10000000000000000000006 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006; };
+		A10000000000000000000007 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007; };
+		A10000000000000000000008 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008; };
+		A10000000000000000000009 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009; };
+		A1000000000000000000000A /* PanelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A; };
+		A1000000000000000000000B /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000B; };
+		A1000000000000000000000C /* CloudTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C; };
+		A1000000000000000000000D /* PomodoroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000F; };
+		A1000000000000000000000E /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010; };
+		A1000000000000000000000F /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011; };
+		A10000000000000000000010 /* BrainDumpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000012; };
+		A10000000000000000000011 /* SpeechManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000013; };
+		A10000000000000000000012 /* BrainDump.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000014; };
+		A10000000000000000000013 /* TaskCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000015; };
+		A10000000000000000000014 /* DesktopWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000016; };
+		A10000000000000000000015 /* MonthlyStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000017; };
+		A10000000000000000000016 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000018; };
+		A10000000000000000000017 /* MiniCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000019; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A20000000000000000000001 /* CloudApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudApp.swift; sourceTree = "<group>"; };
+		A20000000000000000000002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A20000000000000000000003 /* NotchPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchPanelView.swift; sourceTree = "<group>"; };
+		A20000000000000000000004 /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
+		A20000000000000000000005 /* UpNextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpNextView.swift; sourceTree = "<group>"; };
+		A20000000000000000000006 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		A20000000000000000000007 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
+		A20000000000000000000008 /* NoteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteItem.swift; sourceTree = "<group>"; };
+		A20000000000000000000009 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		A2000000000000000000000A /* PanelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelManager.swift; sourceTree = "<group>"; };
+		A2000000000000000000000B /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
+		A2000000000000000000000C /* CloudTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudTheme.swift; sourceTree = "<group>"; };
+		A2000000000000000000000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2000000000000000000000E /* Cloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cloud.entitlements; sourceTree = "<group>"; };
+		A2000000000000000000000F /* PomodoroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroView.swift; sourceTree = "<group>"; };
+		A20000000000000000000010 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
+		A20000000000000000000011 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		A20000000000000000000012 /* BrainDumpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrainDumpView.swift; sourceTree = "<group>"; };
+		A20000000000000000000013 /* SpeechManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechManager.swift; sourceTree = "<group>"; };
+		A20000000000000000000014 /* BrainDump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrainDump.swift; sourceTree = "<group>"; };
+		A20000000000000000000015 /* TaskCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCategory.swift; sourceTree = "<group>"; };
+		A20000000000000000000016 /* DesktopWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopWidgetView.swift; sourceTree = "<group>"; };
+		A20000000000000000000017 /* MonthlyStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStats.swift; sourceTree = "<group>"; };
+		A20000000000000000000018 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		A20000000000000000000019 /* MiniCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCalendarView.swift; sourceTree = "<group>"; };
+		A30000000000000000000001 /* Cloud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cloud.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A40000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A50000000000000000000001 /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				A50000000000000000000002 /* Cloud */,
+				A50000000000000000000006 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A50000000000000000000002 /* Cloud */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000001 /* CloudApp.swift */,
+				A20000000000000000000002 /* AppDelegate.swift */,
+				A50000000000000000000003 /* Views */,
+				A50000000000000000000004 /* Models */,
+				A50000000000000000000005 /* Managers */,
+				A50000000000000000000007 /* Theme */,
+				A2000000000000000000000D /* Info.plist */,
+				A2000000000000000000000E /* Cloud.entitlements */,
+			);
+			path = Cloud;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000003 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000003 /* NotchPanelView.swift */,
+				A20000000000000000000004 /* TodoListView.swift */,
+				A20000000000000000000005 /* UpNextView.swift */,
+				A20000000000000000000006 /* NotesView.swift */,
+				A2000000000000000000000F /* PomodoroView.swift */,
+				A20000000000000000000010 /* ProjectsView.swift */,
+				A20000000000000000000012 /* BrainDumpView.swift */,
+				A20000000000000000000016 /* DesktopWidgetView.swift */,
+				A20000000000000000000018 /* StatsView.swift */,
+				A20000000000000000000019 /* MiniCalendarView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000007 /* TodoItem.swift */,
+				A20000000000000000000008 /* NoteItem.swift */,
+				A20000000000000000000009 /* DataStore.swift */,
+				A20000000000000000000011 /* Project.swift */,
+				A20000000000000000000014 /* BrainDump.swift */,
+				A20000000000000000000015 /* TaskCategory.swift */,
+				A20000000000000000000017 /* MonthlyStats.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000005 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A2000000000000000000000A /* PanelManager.swift */,
+				A2000000000000000000000B /* CalendarManager.swift */,
+				A20000000000000000000013 /* SpeechManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000006 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A30000000000000000000001 /* Cloud.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000007 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				A2000000000000000000000C /* CloudTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A60000000000000000000001 /* Cloud */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A80000000000000000000003 /* Build configuration list for PBXNativeTarget "Cloud" */;
+			buildPhases = (
+				A70000000000000000000001 /* Sources */,
+				A40000000000000000000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Cloud;
+			productName = Cloud;
+			productReference = A30000000000000000000001 /* Cloud.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A90000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A60000000000000000000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = A80000000000000000000001 /* Build configuration list for PBXProject "Cloud" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A50000000000000000000001;
+			productRefGroup = A50000000000000000000006 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A60000000000000000000001 /* Cloud */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A70000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000001 /* CloudApp.swift in Sources */,
+				A10000000000000000000002 /* AppDelegate.swift in Sources */,
+				A10000000000000000000003 /* NotchPanelView.swift in Sources */,
+				A10000000000000000000004 /* TodoListView.swift in Sources */,
+				A10000000000000000000005 /* UpNextView.swift in Sources */,
+				A10000000000000000000006 /* NotesView.swift in Sources */,
+				A10000000000000000000007 /* TodoItem.swift in Sources */,
+				A10000000000000000000008 /* NoteItem.swift in Sources */,
+				A10000000000000000000009 /* DataStore.swift in Sources */,
+				A1000000000000000000000A /* PanelManager.swift in Sources */,
+				A1000000000000000000000B /* CalendarManager.swift in Sources */,
+				A1000000000000000000000C /* CloudTheme.swift in Sources */,
+				A1000000000000000000000D /* PomodoroView.swift in Sources */,
+				A1000000000000000000000E /* ProjectsView.swift in Sources */,
+				A1000000000000000000000F /* Project.swift in Sources */,
+				A10000000000000000000010 /* BrainDumpView.swift in Sources */,
+				A10000000000000000000011 /* SpeechManager.swift in Sources */,
+				A10000000000000000000012 /* BrainDump.swift in Sources */,
+				A10000000000000000000013 /* TaskCategory.swift in Sources */,
+				A10000000000000000000014 /* DesktopWidgetView.swift in Sources */,
+				A10000000000000000000015 /* MonthlyStats.swift in Sources */,
+				A10000000000000000000016 /* StatsView.swift in Sources */,
+				A10000000000000000000017 /* MiniCalendarView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		AA000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Cloud/Cloud.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Cloud/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Cloud needs access to your calendar to show upcoming events.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kimberlymares.Cloud;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AA000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Cloud/Cloud.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Cloud/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Cloud needs access to your calendar to show upcoming events.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kimberlymares.Cloud;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A80000000000000000000001 /* Build configuration list for PBXProject "Cloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000000000000000000001 /* Debug */,
+				AA000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A80000000000000000000003 /* Build configuration list for PBXNativeTarget "Cloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000000000000000000003 /* Debug */,
+				AA000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = A90000000000000000000001 /* Project object */;
+}
