@@ -46,6 +46,27 @@ final class PanelManager: ObservableObject {
     }
     var widgetsVisible: Bool { !enabledWidgets.isEmpty }
 
+    // Notch panel widgets
+    static let allNotchWidgetKeys = ["tasks", "projects", "pomodoro", "notes", "calendar", "brainDump"]
+    @Published var enabledNotchWidgets: Set<String> {
+        didSet {
+            UserDefaults.standard.set(Array(enabledNotchWidgets), forKey: "enabled_notch_widgets")
+        }
+    }
+
+    func toggleNotchWidget(_ key: String) {
+        if enabledNotchWidgets.contains(key) {
+            guard enabledNotchWidgets.count > 1 else { return }
+            enabledNotchWidgets.remove(key)
+        } else {
+            enabledNotchWidgets.insert(key)
+        }
+    }
+
+    func isNotchWidgetEnabled(_ key: String) -> Bool {
+        enabledNotchWidgets.contains(key)
+    }
+
     let dataStore = DataStore()
     let calendarManager = CalendarManager()
     let pomodoroTimer = PomodoroTimer()
@@ -60,6 +81,14 @@ final class PanelManager: ObservableObject {
         } else {
             self.enabledWidgets = Set(PanelManager.allWidgetKeys)
             defaults.set(PanelManager.allWidgetKeys, forKey: "enabled_widgets")
+        }
+
+        let defaultNotch = ["tasks", "projects", "pomodoro", "notes", "calendar"]
+        if let savedNotch = defaults.array(forKey: "enabled_notch_widgets") as? [String] {
+            self.enabledNotchWidgets = Set(savedNotch)
+        } else {
+            self.enabledNotchWidgets = Set(defaultNotch)
+            defaults.set(defaultNotch, forKey: "enabled_notch_widgets")
         }
 
         let posString = defaults.string(forKey: "spotlight_position") ?? "top"

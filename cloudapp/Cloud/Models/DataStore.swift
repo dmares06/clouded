@@ -1,5 +1,8 @@
 import Foundation
 import Combine
+import os.log
+
+private let logger = Logger(subsystem: "com.clouded.app", category: "DataStore")
 
 final class DataStore: ObservableObject {
     @Published private(set) var todos: [TodoItem] = []
@@ -264,39 +267,19 @@ final class DataStore: ObservableObject {
         }
     }
 
-    private func saveBrainDumps() {
-        if let data = try? encoder.encode(brainDumps) {
-            try? data.write(to: brainDumpsURL, options: .atomic)
+    private func save<T: Encodable>(_ items: T, to url: URL, label: String) {
+        do {
+            let data = try encoder.encode(items)
+            try data.write(to: url, options: .atomic)
+        } catch {
+            logger.error("Failed to save \(label) to \(url.path): \(error.localizedDescription)")
         }
     }
 
-    private func saveTodos() {
-        if let data = try? encoder.encode(todos) {
-            try? data.write(to: todosURL, options: .atomic)
-        }
-    }
-
-    private func saveNotes() {
-        if let data = try? encoder.encode(notes) {
-            try? data.write(to: notesURL, options: .atomic)
-        }
-    }
-
-    private func saveProjects() {
-        if let data = try? encoder.encode(projects) {
-            try? data.write(to: projectsURL, options: .atomic)
-        }
-    }
-
-    private func saveCategories() {
-        if let data = try? encoder.encode(categories) {
-            try? data.write(to: categoriesURL, options: .atomic)
-        }
-    }
-
-    private func saveStats() {
-        if let data = try? encoder.encode(allStats) {
-            try? data.write(to: statsURL, options: .atomic)
-        }
-    }
+    private func saveBrainDumps() { save(brainDumps, to: brainDumpsURL, label: "brain dumps") }
+    private func saveTodos() { save(todos, to: todosURL, label: "todos") }
+    private func saveNotes() { save(notes, to: notesURL, label: "notes") }
+    private func saveProjects() { save(projects, to: projectsURL, label: "projects") }
+    private func saveCategories() { save(categories, to: categoriesURL, label: "categories") }
+    private func saveStats() { save(allStats, to: statsURL, label: "stats") }
 }

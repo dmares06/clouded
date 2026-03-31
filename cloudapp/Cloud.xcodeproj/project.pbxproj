@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A10000000000000000000020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001A; };
 		A10000000000000000000001 /* CloudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001; };
 		A10000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002; };
 		A10000000000000000000003 /* NotchPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003; };
@@ -58,6 +59,7 @@
 		A20000000000000000000017 /* MonthlyStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyStats.swift; sourceTree = "<group>"; };
 		A20000000000000000000018 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		A20000000000000000000019 /* MiniCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCalendarView.swift; sourceTree = "<group>"; };
+		A2000000000000000000001A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A30000000000000000000001 /* Cloud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cloud.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -70,6 +72,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB000000000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000020 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXGroup section */
 		A50000000000000000000001 /* Root */ = {
@@ -89,6 +102,7 @@
 				A50000000000000000000004 /* Models */,
 				A50000000000000000000005 /* Managers */,
 				A50000000000000000000007 /* Theme */,
+				A2000000000000000000001A /* Assets.xcassets */,
 				A2000000000000000000000D /* Info.plist */,
 				A2000000000000000000000E /* Cloud.entitlements */,
 			);
@@ -161,6 +175,7 @@
 			buildPhases = (
 				A70000000000000000000001 /* Sources */,
 				A40000000000000000000001 /* Frameworks */,
+				AB000000000000000000001 /* Resources */,
 			);
 			buildRules = (
 			);

@@ -16,24 +16,23 @@ struct NotchPanelView: View {
         case home, stats
     }
 
-    // Only tasks vs projects proportion — right column is fixed
-    @AppStorage("col_split") private var tasksSplit: Double = 0.50
-
-    // Resizable right-column row heights (proportions)
-    @AppStorage("row_pomo") private var pomoHeight: Double = 0.28
-    @AppStorage("row_notes") private var notesHeight: Double = 0.40
-
-    // Track drag start values for proper delta handling
-    @State private var dragStartTasksSplit: Double?
-    @State private var dragStartPomoHeight: Double?
-    @State private var dragStartNotesHeight: Double?
-
     private let brainDumpWidth: CGFloat = 230
     private let brainDumpTabWidth: CGFloat = 26
-    private let rightColumnWidth: CGFloat = 180
+
+    /// Ordered list of enabled notch widgets (preserves canonical order)
+    private var orderedNotchWidgets: [String] {
+        PanelManager.allNotchWidgetKeys.filter { panelManager.isNotchWidgetEnabled($0) }
+    }
+
+    private var showBrainDumpSidebar: Bool {
+        !panelManager.isNotchWidgetEnabled("brainDump")
+    }
 
     private var totalWidth: CGFloat {
-        brainDumpOpen
+        if !showBrainDumpSidebar {
+            return CloudTheme.panelWidth
+        }
+        return brainDumpOpen
             ? CloudTheme.panelWidth + brainDumpWidth + 1
             : CloudTheme.panelWidth + brainDumpTabWidth + 6
     }
@@ -59,128 +58,102 @@ struct NotchPanelView: View {
                         .transition(.opacity)
                 } else {
 
-                // Two-zone layout: left (tasks+projects resizable) | right (fixed timer/notes/calendar)
+                // Dynamic widget grid
                 GeometryReader { geo in
                     let pad: CGFloat = 8
+                    let spacing: CGFloat = 6
                     let availableWidth = geo.size.width - pad * 2
                     let availableHeight = geo.size.height - pad * 2
-                    let handleWidth: CGFloat = 6
+                    let widgets = orderedNotchWidgets
+                    let count = widgets.count
 
-                    // Left zone = everything minus right column and handle
-                    let leftZoneWidth = availableWidth - rightColumnWidth - handleWidth
-                    let tw = leftZoneWidth * tasksSplit
-                    let pw = leftZoneWidth * (1 - tasksSplit)
-
-                    HStack(spacing: 0) {
-                        // --- Left zone: Tasks + Projects ---
-                        HStack(spacing: 0) {
-                            sectionCard { TodoListView(dataStore: dataStore, datePickerTaskID: $datePickerTaskID) }
-                                .frame(width: tw, height: availableHeight)
-
-                            // Drag handle between tasks and projects
-                            dragHandle(horizontal: true,
-                                onDrag: { delta in
-                                    if dragStartTasksSplit == nil { dragStartTasksSplit = tasksSplit }
-                                    let pct = delta / leftZoneWidth
-                                    tasksSplit = max(0.25, min(0.75, (dragStartTasksSplit ?? tasksSplit) + pct))
-                                },
-                                onEnd: { dragStartTasksSplit = nil }
-                            )
-
-                            sectionCard { ProjectsView(dataStore: dataStore) }
-                                .frame(width: pw, height: availableHeight)
-                        }
-                        .frame(width: leftZoneWidth, height: availableHeight)
-                        .clipped()
-                        .overlay(alignment: .topLeading) {
-                            if datePickerTaskID != nil {
-                                MiniCalendarView(
-                                    onSelectDate: { date in
-                                        if let taskID = datePickerTaskID,
-                                           let task = dataStore.todos.first(where: { $0.id == taskID }) {
-                                            dataStore.setTaskDueDate(task, date: date, calendarManager: calendarManager)
-                                        }
-                                        withAnimation(CloudTheme.springAnimation) {
-                                            datePickerTaskID = nil
-                                        }
-                                    },
-                                    onDismiss: {
-                                        withAnimation(CloudTheme.springAnimation) {
-                                            datePickerTaskID = nil
-                                        }
-                                    }
-                                )
-                                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
-                                .transition(.opacity)
-                                .zIndex(10)
+                    if count <= 4 {
+                        // Single row, equal widths
+                        let colWidth = (availableWidth - spacing * CGFloat(max(count - 1, 0))) / CGFloat(max(count, 1))
+                        HStack(spacing: spacing) {
+                            ForEach(widgets, id: \.self) { key in
+                                sectionCard { notchWidgetView(for: key) }
+                                    .frame(width: colWidth, height: availableHeight)
+                                    .transition(.opacity.combined(with: .scale))
                             }
                         }
+                        .padding(pad)
+                    } else {
+                        // Two rows
+                        let topCount = Int(ceil(Double(count) / 2.0))
+                        let topWidgets = Array(widgets.prefix(topCount))
+                        let bottomWidgets = Array(widgets.dropFirst(topCount))
+                        let rowSpacing: CGFloat = 6
+                        let rowHeight = (availableHeight - rowSpacing) / 2
 
-                        Spacer().frame(width: handleWidth)
-
-                        // --- Right zone: Timer / Notes / Up Next ---
-                        VStack(spacing: 4) {
-                            let ph = availableHeight * pomoHeight
-                            let nh = availableHeight * notesHeight
-                            let uh = max(40, availableHeight - ph - nh - 16)
-
-                            sectionCard { CompactPomodoroView(timer: pomodoroTimer) }
-                                .frame(height: ph)
-
-                            dragHandle(horizontal: false,
-                                onDrag: { delta in
-                                    if dragStartPomoHeight == nil { dragStartPomoHeight = pomoHeight }
-                                    let pct = delta / availableHeight
-                                    let newPomo = max(0.15, min(0.50, (dragStartPomoHeight ?? pomoHeight) + pct))
-                                    if newPomo + notesHeight < 0.85 {
-                                        pomoHeight = newPomo
-                                    }
-                                },
-                                onEnd: { dragStartPomoHeight = nil }
-                            )
-
-                            sectionCard { NotesView(dataStore: dataStore) }
-                                .frame(height: nh)
-
-                            dragHandle(horizontal: false,
-                                onDrag: { delta in
-                                    if dragStartNotesHeight == nil { dragStartNotesHeight = notesHeight }
-                                    let pct = delta / availableHeight
-                                    let newNotes = max(0.15, min(0.60, (dragStartNotesHeight ?? notesHeight) + pct))
-                                    if pomoHeight + newNotes < 0.85 {
-                                        notesHeight = newNotes
-                                    }
-                                },
-                                onEnd: { dragStartNotesHeight = nil }
-                            )
-
-                            sectionCard { CompactUpNextView(calendarManager: calendarManager) }
-                                .frame(height: uh)
+                        VStack(spacing: rowSpacing) {
+                            HStack(spacing: spacing) {
+                                let tw = (availableWidth - spacing * CGFloat(max(topWidgets.count - 1, 0))) / CGFloat(max(topWidgets.count, 1))
+                                ForEach(topWidgets, id: \.self) { key in
+                                    sectionCard { notchWidgetView(for: key) }
+                                        .frame(width: tw, height: rowHeight)
+                                        .transition(.opacity.combined(with: .scale))
+                                }
+                            }
+                            HStack(spacing: spacing) {
+                                let bw = (availableWidth - spacing * CGFloat(max(bottomWidgets.count - 1, 0))) / CGFloat(max(bottomWidgets.count, 1))
+                                ForEach(bottomWidgets, id: \.self) { key in
+                                    sectionCard { notchWidgetView(for: key) }
+                                        .frame(width: bw, height: rowHeight)
+                                        .transition(.opacity.combined(with: .scale))
+                                }
+                            }
                         }
-                        .frame(width: rightColumnWidth, height: availableHeight)
+                        .padding(pad)
                     }
-                    .padding(pad)
                 }
+                .animation(CloudTheme.springAnimation, value: orderedNotchWidgets)
 
                 } // end home tab
             }
             .frame(width: mainContentWidth)
             .clipped()
 
-            // Spacer between main content and brain dump
-            Spacer().frame(width: 6)
+            // Brain Dump sidebar (hidden when Brain Dump is a notch widget)
+            if showBrainDumpSidebar {
+                Spacer().frame(width: 6)
 
-            // Brain Dump
-            if brainDumpOpen {
-                brainDumpPanel
-            } else {
-                brainDumpTab
+                if brainDumpOpen {
+                    brainDumpPanel
+                } else {
+                    brainDumpTab
+                }
             }
         }
         .frame(width: totalWidth, height: CloudTheme.panelHeight)
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: CloudTheme.cornerRadius))
         .shadow(color: CloudTheme.panelShadow, radius: 20, x: 0, y: 10)
+        .overlay(alignment: .topLeading) {
+            if datePickerTaskID != nil {
+                MiniCalendarView(
+                    onSelectDate: { date in
+                        if let taskID = datePickerTaskID,
+                           let task = dataStore.todos.first(where: { $0.id == taskID }) {
+                            dataStore.setTaskDueDate(task, date: date, calendarManager: calendarManager)
+                        }
+                        withAnimation(CloudTheme.springAnimation) {
+                            datePickerTaskID = nil
+                        }
+                    },
+                    onDismiss: {
+                        withAnimation(CloudTheme.springAnimation) {
+                            datePickerTaskID = nil
+                        }
+                    }
+                )
+                .padding(.top, 50)
+                .padding(.leading, 8)
+                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
+                .transition(.opacity)
+                .zIndex(10)
+            }
+        }
         .animation(CloudTheme.springAnimation, value: brainDumpOpen)
         .onAppear { calendarManager.requestAccess() }
         .overlay(
@@ -242,41 +215,25 @@ struct NotchPanelView: View {
         .transition(.move(edge: .trailing).combined(with: .opacity))
     }
 
-    // MARK: - Drag Handle
+    // MARK: - Notch Widget View
 
-    private func dragHandle(
-        horizontal: Bool,
-        onDrag: @escaping (CGFloat) -> Void,
-        onEnd: @escaping () -> Void = {}
-    ) -> some View {
-        let size: CGFloat = 10
-        return ZStack {
-            Rectangle()
-                .fill(Color.clear)
-            RoundedRectangle(cornerRadius: 1)
-                .fill(CloudTheme.borderBlue.opacity(0.5))
-                .frame(width: horizontal ? 2 : 20, height: horizontal ? 20 : 2)
-        }
-        .frame(width: horizontal ? size : nil, height: horizontal ? nil : size)
-        .contentShape(Rectangle())
-        .gesture(
-            DragGesture(minimumDistance: 1)
-                .onChanged { value in
-                    let delta = horizontal ? value.translation.width : value.translation.height
-                    onDrag(delta)
-                }
-                .onEnded { _ in onEnd() }
-        )
-        .onHover { hovering in
-            if hovering {
-                if horizontal {
-                    NSCursor.resizeLeftRight.push()
-                } else {
-                    NSCursor.resizeUpDown.push()
-                }
-            } else {
-                NSCursor.pop()
-            }
+    @ViewBuilder
+    private func notchWidgetView(for key: String) -> some View {
+        switch key {
+        case "tasks":
+            TodoListView(dataStore: dataStore, datePickerTaskID: $datePickerTaskID)
+        case "projects":
+            ProjectsView(dataStore: dataStore)
+        case "pomodoro":
+            CompactPomodoroView(timer: pomodoroTimer)
+        case "notes":
+            NotesView(dataStore: dataStore)
+        case "calendar":
+            CompactUpNextView(calendarManager: calendarManager)
+        case "brainDump":
+            BrainDumpView(dataStore: dataStore)
+        default:
+            EmptyView()
         }
     }
 
@@ -410,7 +367,16 @@ struct NotchPanelView: View {
 
     // MARK: - Widget Picker Dropdown
 
-    private static let widgetLabels: [(key: String, label: String, icon: String)] = [
+    private static let notchWidgetLabels: [(key: String, label: String, icon: String)] = [
+        ("tasks", "Tasks", "checklist"),
+        ("projects", "Projects", "folder.fill"),
+        ("pomodoro", "Pomodoro", "timer"),
+        ("notes", "Notes", "note.text"),
+        ("calendar", "Calendar", "calendar"),
+        ("brainDump", "Brain Dump", "brain.head.profile")
+    ]
+
+    private static let desktopWidgetLabels: [(key: String, label: String, icon: String)] = [
         ("tasks", "Tasks", "checklist"),
         ("calendar", "Calendar", "calendar"),
         ("notes", "Notes", "note.text"),
@@ -419,34 +385,85 @@ struct NotchPanelView: View {
     ]
 
     private var widgetPickerDropdown: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            ForEach(Self.widgetLabels, id: \.key) { item in
-                let enabled = panelManager.isWidgetEnabled(item.key)
-                HStack(spacing: 6) {
-                    Image(systemName: enabled ? "checkmark.square.fill" : "square")
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundStyle(enabled ? CloudTheme.accentBlue : CloudTheme.textSecondary)
-                    Image(systemName: item.icon)
-                        .font(.system(size: 9, weight: .medium))
-                        .foregroundStyle(enabled ? CloudTheme.accentBlue : CloudTheme.textSecondary)
-                        .frame(width: 14)
-                    Text(item.label)
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(enabled ? CloudTheme.textPrimary : CloudTheme.textSecondary)
-                    Spacer()
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 0) {
+                // NOTCH PANEL section
+                Text("NOTCH PANEL")
+                    .font(.system(size: 8, weight: .heavy))
+                    .foregroundStyle(CloudTheme.textSecondary)
+                    .padding(.horizontal, 8)
+                    .padding(.top, 6)
+                    .padding(.bottom, 4)
+
+                ForEach(Self.notchWidgetLabels, id: \.key) { item in
+                    let enabled = panelManager.isNotchWidgetEnabled(item.key)
+                    let isLastOne = enabled && panelManager.enabledNotchWidgets.count <= 1
+                    HStack(spacing: 6) {
+                        Image(systemName: item.icon)
+                            .font(.system(size: 9, weight: .medium))
+                            .foregroundStyle(enabled ? CloudTheme.accentBlue : CloudTheme.textSecondary)
+                            .frame(width: 14)
+                        Text(item.label)
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundStyle(enabled ? CloudTheme.textPrimary : CloudTheme.textSecondary)
+                        Spacer()
+                        Image(systemName: enabled ? "minus.circle.fill" : "plus.circle.fill")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundStyle(enabled
+                                ? (isLastOne ? CloudTheme.textSecondary.opacity(0.4) : Color.red.opacity(0.7))
+                                : Color.green.opacity(0.7))
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 5)
+                    .background(enabled ? CloudTheme.accentBlue.opacity(0.06) : Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation(CloudTheme.springAnimation) {
+                            panelManager.toggleNotchWidget(item.key)
+                        }
+                    }
                 }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 5)
-                .background(enabled ? CloudTheme.accentBlue.opacity(0.06) : Color.clear)
-                .clipShape(RoundedRectangle(cornerRadius: 4))
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    panelManager.toggleWidget(item.key)
+
+                Divider()
+                    .overlay(CloudTheme.borderBlue.opacity(0.4))
+                    .padding(.vertical, 6)
+
+                // DESKTOP WIDGETS section
+                Text("DESKTOP WIDGETS")
+                    .font(.system(size: 8, weight: .heavy))
+                    .foregroundStyle(CloudTheme.textSecondary)
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 4)
+
+                ForEach(Self.desktopWidgetLabels, id: \.key) { item in
+                    let enabled = panelManager.isWidgetEnabled(item.key)
+                    HStack(spacing: 6) {
+                        Image(systemName: item.icon)
+                            .font(.system(size: 9, weight: .medium))
+                            .foregroundStyle(enabled ? CloudTheme.accentBlue : CloudTheme.textSecondary)
+                            .frame(width: 14)
+                        Text(item.label)
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundStyle(enabled ? CloudTheme.textPrimary : CloudTheme.textSecondary)
+                        Spacer()
+                        Image(systemName: enabled ? "minus.circle.fill" : "plus.circle.fill")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundStyle(enabled ? Color.red.opacity(0.7) : Color.green.opacity(0.7))
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 5)
+                    .background(enabled ? CloudTheme.accentBlue.opacity(0.06) : Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        panelManager.toggleWidget(item.key)
+                    }
                 }
             }
+            .padding(6)
         }
-        .padding(6)
-        .frame(width: 150)
+        .frame(width: 170, maxHeight: 320)
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .fill(Color.white)
