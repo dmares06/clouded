@@ -23,6 +23,7 @@ landing/.env.local
 landing/.env.*.local
 
 # Package managers
+.pnpm-store/
 landing/pnpm-debug.log*
 landing/npm-debug.log*
 
