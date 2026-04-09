@@ -97,12 +97,14 @@ final class DataStore: ObservableObject {
 
     // MARK: - Todos
 
-    func addTodo(title: String, categoryID: UUID? = nil) {
-        guard !title.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+    @discardableResult
+    func addTodo(title: String, categoryID: UUID? = nil) -> TodoItem? {
+        guard !title.trimmingCharacters(in: .whitespaces).isEmpty else { return nil }
         let newTodo = TodoItem(title: title.trimmingCharacters(in: .whitespaces), categoryID: categoryID)
         todos = [newTodo] + todos
         saveTodos()
         incrementStat { $0.tasksCreated += 1 }
+        return newTodo
     }
 
     func toggleTodo(_ item: TodoItem) {

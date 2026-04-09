@@ -10,6 +10,14 @@ final class CalendarManager: ObservableObject {
     private let eventStore = EKEventStore()
     private var refreshTimer: Timer?
 
+    init() {
+        authorizationStatus = EKEventStore.authorizationStatus(for: .event)
+        if isAuthorizedForReading {
+            fetchUpcomingEvents()
+            startAutoRefresh()
+        }
+    }
+
     struct CalendarEvent: Identifiable {
         let id: String
         let title: String
@@ -69,6 +77,14 @@ final class CalendarManager: ObservableObject {
         }
     }
 
+    private var isAuthorizedForReading: Bool {
+        if #available(macOS 14.0, *) {
+            authorizationStatus == .fullAccess
+        } else {
+            authorizationStatus == .authorized
+        }
+    }
+
     func fetchUpcomingEvents() {
         let now = Date()
         let endDate = Calendar.current.date(byAdding: .day, value: 1, to: now) ?? now
@@ -122,6 +138,7 @@ final class CalendarManager: ObservableObject {
     }
 
     private func startAutoRefresh() {
+        refreshTimer?.invalidate()
         refreshTimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { [weak self] _ in
             self?.fetchUpcomingEvents()
         }

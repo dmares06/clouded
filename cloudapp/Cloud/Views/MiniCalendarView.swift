@@ -8,6 +8,8 @@ struct MiniCalendarView: View {
 
     private let calendar = Calendar.current
     private let daySymbols = ["S", "M", "T", "W", "T", "F", "S"]
+    private let cellSize: CGFloat = 22
+    private let cellSpacing: CGFloat = 2
 
     private var monthTitle: String {
         let formatter = DateFormatter()
@@ -54,12 +56,12 @@ struct MiniCalendarView: View {
             }
 
             // Weekday headers
-            HStack(spacing: 0) {
-                ForEach(daySymbols, id: \.self) { symbol in
+            HStack(spacing: cellSpacing) {
+                ForEach(Array(daySymbols.enumerated()), id: \.offset) { _, symbol in
                     Text(symbol)
                         .font(.system(size: 9, weight: .semibold))
                         .foregroundStyle(CloudTheme.textSecondary)
-                        .frame(maxWidth: .infinity)
+                        .frame(width: cellSize, height: cellSize - 4)
                 }
             }
 
@@ -70,14 +72,14 @@ struct MiniCalendarView: View {
 
             VStack(spacing: 2) {
                 ForEach(0..<rows, id: \.self) { row in
-                    HStack(spacing: 0) {
+                    HStack(spacing: cellSpacing) {
                         ForEach(0..<7, id: \.self) { col in
                             let index = row * 7 + col - firstWeekday
                             if index >= 0, index < days.count, let date = calendar.date(from: days[index]) {
                                 dayCell(date: date, day: days[index].day ?? 0)
                             } else {
                                 Color.clear
-                                    .frame(maxWidth: .infinity, minHeight: 22)
+                                    .frame(width: cellSize, height: cellSize)
                             }
                         }
                     }
@@ -92,8 +94,9 @@ struct MiniCalendarView: View {
                 .onTapGesture { onDismiss() }
                 .padding(.top, 2)
         }
-        .padding(10)
-        .frame(width: 190)
+        .padding(.horizontal, 9)
+        .padding(.vertical, 10)
+        .frame(width: 176)
         .background(
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.white)
@@ -112,11 +115,11 @@ struct MiniCalendarView: View {
         return Text("\(day)")
             .font(.system(size: 11, weight: isToday ? .bold : .medium))
             .foregroundStyle(isToday ? CloudTheme.textOnAccent : CloudTheme.textPrimary)
-            .frame(maxWidth: .infinity, minHeight: 22)
+            .frame(width: cellSize, height: cellSize)
             .background(
-                isToday
-                    ? AnyShape(Circle()).fill(CloudTheme.accentBlue).eraseToAnyView()
-                    : AnyShape(Circle()).fill(Color.clear).eraseToAnyView()
+                Circle()
+                    .fill(isToday ? CloudTheme.accentBlue : Color.clear)
+                    .frame(width: cellSize - 2, height: cellSize - 2)
             )
             .contentShape(Rectangle())
             .onTapGesture { onSelectDate(date) }
@@ -136,20 +139,4 @@ struct MiniCalendarView: View {
             }
         }
     }
-}
-
-// MARK: - AnyShape helper
-
-private struct AnyShape: Shape {
-    private let builder: (CGRect) -> Path
-
-    init<S: Shape>(_ shape: S) {
-        builder = { rect in shape.path(in: rect) }
-    }
-
-    func path(in rect: CGRect) -> Path { builder(rect) }
-}
-
-private extension View {
-    func eraseToAnyView() -> AnyView { AnyView(self) }
 }

@@ -2,7 +2,10 @@ import SwiftUI
 
 struct TodoListView: View {
     @ObservedObject var dataStore: DataStore
+    @ObservedObject var calendarManager: CalendarManager
     @Binding var datePickerTaskID: UUID?
+    @Binding var showNewTaskDatePicker: Bool
+    @Binding var newTaskDueDate: Date?
     @State private var newTaskText = ""
     @State private var selectedCategoryID: UUID?
     @State private var showCategoryPicker = false
@@ -59,6 +62,27 @@ struct TodoListView: View {
                         .foregroundStyle(CloudTheme.textPrimary)
                         .focused($isInputFocused)
                         .onSubmit { addTask() }
+
+                    if let dueDate = newTaskDueDate {
+                        Text(Self.shortDateString(dueDate))
+                            .font(.system(size: 8, weight: .bold))
+                            .foregroundStyle(CloudTheme.accentBlue)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
+                            .background(CloudTheme.accentBlue.opacity(0.1))
+                            .clipShape(Capsule())
+                    }
+
+                    Image(systemName: "calendar")
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(newTaskDueDate != nil ? CloudTheme.accentBlue : CloudTheme.accentBlue.opacity(0.4))
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            withAnimation(CloudTheme.springAnimation) {
+                                datePickerTaskID = nil
+                                showNewTaskDatePicker.toggle()
+                            }
+                        }
 
                     // Category selector button
                     categoryButton
@@ -283,6 +307,7 @@ struct TodoListView: View {
                         .foregroundStyle(todo.dueDate != nil ? CloudTheme.accentBlue : CloudTheme.accentBlue.opacity(0.4))
                         .onTapGesture {
                             withAnimation(CloudTheme.springAnimation) {
+                                showNewTaskDatePicker = false
                                 datePickerTaskID = datePickerTaskID == todo.id ? nil : todo.id
                             }
                         }
@@ -335,8 +360,13 @@ struct TodoListView: View {
 
     private func addTask() {
         withAnimation(CloudTheme.springAnimation) {
-            dataStore.addTodo(title: newTaskText, categoryID: selectedCategoryID)
+            if let newTodo = dataStore.addTodo(title: newTaskText, categoryID: selectedCategoryID),
+               let dueDate = newTaskDueDate {
+                dataStore.setTaskDueDate(newTodo, date: dueDate, calendarManager: calendarManager)
+            }
             newTaskText = ""
+            newTaskDueDate = nil
+            showNewTaskDatePicker = false
         }
     }
 }

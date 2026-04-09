@@ -99,12 +99,19 @@ export function HeroSection() {
 
         {/* CTA Button */}
         <motion.button
+          type="button"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 2.1 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="mt-8 rounded-full bg-white px-8 py-3 font-semibold text-primary shadow-xl transition-shadow hover:shadow-2xl"
+          onClick={() =>
+            window.open(
+              "https://github.com/dmares06/clouded/releases/download/V1.0.0/Clouded.dmg",
+              "_blank"
+            )
+          }
         >
           Download for macOS
         </motion.button>
