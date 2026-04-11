@@ -2,45 +2,32 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { Twitter, Github, Mail, Cloud } from "lucide-react"
+import { Github, Mail, Cloud } from "lucide-react"
+
+const DOWNLOAD_URL = "https://github.com/dmares06/clouded/releases/latest/download/Clouded.dmg"
 
 const footerLinks = {
   Product: [
-    { name: "Features", href: "#" },
-    { name: "Pricing", href: "#" },
-    { name: "Changelog", href: "#" },
-    { name: "Download", href: "#" },
-  ],
-  Company: [
-    { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Careers", href: "#" },
-    { name: "Press", href: "#" },
-  ],
-  Resources: [
-    { name: "Documentation", href: "#" },
-    { name: "Help Center", href: "#" },
-    { name: "Community", href: "#" },
-    { name: "Contact", href: "#" },
+    { name: "Features", href: "#features" },
+    { name: "Pricing", href: "#pricing" },
+    { name: "Download", href: DOWNLOAD_URL },
   ],
   Legal: [
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
-    { name: "Security", href: "#" },
+    { name: "Privacy", href: "/privacy" },
+    { name: "License", href: "/terms" },
   ],
 }
 
 const socialLinks = [
-  { name: "Twitter", icon: Twitter, href: "#" },
-  { name: "GitHub", icon: Github, href: "#" },
-  { name: "Email", icon: Mail, href: "#" },
+  { name: "GitHub", icon: Github, href: "https://github.com/dmares06/clouded" },
+  { name: "Email", icon: Mail, href: "mailto:support@getclouded.com" },
 ]
 
 export function Footer() {
   return (
     <footer className="bg-foreground text-background py-16">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <div className="col-span-2">
             <motion.div
@@ -118,11 +105,11 @@ export function Footer() {
           className="pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4"
         >
           <p className="text-sm text-background/50">
-            © {new Date().getFullYear()} Clouded. All rights reserved.
+            &copy; {new Date().getFullYear()} Clouded. Released under the MIT License.
           </p>
           <div className="flex items-center gap-2">
             <span className="text-sm text-background/50">Made with</span>
-            <span className="text-primary">♥</span>
+            <span className="text-primary">&#9829;</span>
             <span className="text-sm text-background/50">for macOS</span>
           </div>
         </motion.div>

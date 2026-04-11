@@ -505,13 +505,13 @@ final class SpotlightArchView: NSView {
     private func setupLayers() {
         guard let layer = self.layer else { return }
 
-        // Outer glow
-        glowLayer.fillColor = NSColor(red: 0.15, green: 0.55, blue: 0.90, alpha: 0.3).cgColor
+        // Keep a transparent outer layer for geometry consistency without a visible halo.
+        glowLayer.fillColor = NSColor.clear.cgColor
         glowLayer.strokeColor = nil
         layer.addSublayer(glowLayer)
 
         // Main arch shape
-        archLayer.fillColor = NSColor(red: 0.02, green: 0.40, blue: 0.75, alpha: 0.9).cgColor
+        archLayer.fillColor = NSColor(red: 0.02, green: 0.40, blue: 0.75, alpha: 1.0).cgColor
         archLayer.strokeColor = nil
         layer.addSublayer(archLayer)
 
@@ -579,10 +579,8 @@ final class SpotlightArchView: NSView {
         CATransaction.setAnimationDuration(0.3)
         archLayer.fillColor = on
             ? NSColor(red: 0.10, green: 0.50, blue: 0.90, alpha: 1.0).cgColor
-            : NSColor(red: 0.02, green: 0.40, blue: 0.75, alpha: 0.9).cgColor
-        glowLayer.fillColor = on
-            ? NSColor(red: 0.15, green: 0.55, blue: 0.90, alpha: 0.5).cgColor
-            : NSColor(red: 0.15, green: 0.55, blue: 0.90, alpha: 0.3).cgColor
+            : NSColor(red: 0.02, green: 0.40, blue: 0.75, alpha: 1.0).cgColor
+        glowLayer.fillColor = NSColor.clear.cgColor
         CATransaction.commit()
     }
 
@@ -605,7 +603,7 @@ final class SpotlightArchView: NSView {
         CATransaction.begin()
         CATransaction.setAnimationDuration(0.15)
         archLayer.fillColor = NSColor(red: 0.10, green: 0.55, blue: 0.95, alpha: 1.0).cgColor
-        glowLayer.fillColor = NSColor(red: 0.15, green: 0.55, blue: 0.90, alpha: 0.6).cgColor
+        glowLayer.fillColor = NSColor.clear.cgColor
         CATransaction.commit()
 
         hoverTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false) { [weak self] _ in
@@ -620,8 +618,8 @@ final class SpotlightArchView: NSView {
         if !glowing {
             CATransaction.begin()
             CATransaction.setAnimationDuration(0.2)
-            archLayer.fillColor = NSColor(red: 0.02, green: 0.40, blue: 0.75, alpha: 0.9).cgColor
-            glowLayer.fillColor = NSColor(red: 0.15, green: 0.55, blue: 0.90, alpha: 0.3).cgColor
+            archLayer.fillColor = NSColor(red: 0.02, green: 0.40, blue: 0.75, alpha: 1.0).cgColor
+            glowLayer.fillColor = NSColor.clear.cgColor
             CATransaction.commit()
         }
     }

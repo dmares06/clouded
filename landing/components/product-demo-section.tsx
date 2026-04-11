@@ -2,10 +2,10 @@
 
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef, useState } from "react"
-import Image from "next/image"
 import {
   CheckCircle2,
   Circle,
+  Cloud,
   Plus,
   X,
   Play,
@@ -47,27 +47,27 @@ export function ProductDemoSection() {
 
   // Interactive state
   const [tasks, setTasks] = useState<Task[]>([
-    { id: "1", text: "Cancel Cursor subscription", completed: false, category: "Personal" },
-    { id: "2", text: "Dax Haircut 1:30 today", completed: false, category: "Personal" },
-    { id: "3", text: "Put CRE license in escrow", completed: false, category: "Personal" },
-    { id: "4", text: "Get Airbnb", completed: false },
-    { id: "5", text: "Talk about summer camps", completed: false },
-    { id: "6", text: "Get Tax information together", completed: false, category: "Personal" },
+    { id: "1", text: "Review weekly priorities", completed: false, category: "Personal" },
+    { id: "2", text: "Book dentist appointment", completed: false, category: "Personal" },
+    { id: "3", text: "Send invoice reminder", completed: false, category: "Work" },
+    { id: "4", text: "Pick up groceries", completed: false },
+    { id: "5", text: "Plan weekend hike", completed: false },
+    { id: "6", text: "Organize tax documents", completed: false, category: "Personal" },
   ])
 
   const [notes, setNotes] = useState<Note[]>([
-    { id: "1", text: "Continue to learn M..." },
-    { id: "2", text: "Watch videos on se..." },
+    { id: "1", text: "Ideas for Friday demo" },
+    { id: "2", text: "Questions for team sync" },
   ])
 
   const [projects, setProjects] = useState<Project[]>([
     {
       id: "1",
-      name: "AgentXrlty",
+      name: "Website Launch",
       tasks: [
-        { id: "1", text: "Before Launch:..." },
-        { id: "2", text: "check to make sur..." },
-        { id: "3", text: "Add stripe" },
+        { id: "1", text: "Finalize homepage copy" },
+        { id: "2", text: "Check mobile layout" },
+        { id: "3", text: "Connect payment button" },
       ],
     },
   ])
@@ -76,8 +76,8 @@ export function ProductDemoSection() {
   const [newTaskText, setNewTaskText] = useState("")
   const [newNoteText, setNewNoteText] = useState("")
   const [newBrainDump, setNewBrainDump] = useState("")
-  const [timerMinutes, setTimerMinutes] = useState(24)
-  const [timerSeconds, setTimerSeconds] = useState(58)
+  const [timerMinutes] = useState(24)
+  const [timerSeconds] = useState(58)
   const [isTimerRunning, setIsTimerRunning] = useState(false)
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null)
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null)
@@ -179,13 +179,15 @@ export function ProductDemoSection() {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="flex h-[70px] w-[240px] justify-center"
         >
-          <Image
-            src="/images/cloud-widget.png"
-            alt="Cloud Widget"
-            width={240}
-            height={70}
-          />
+          <div
+            className="flex h-11 items-center gap-2 rounded-b-[22px] bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20"
+            aria-label="Cloud notch"
+          >
+            <Cloud className="h-4 w-4 fill-primary-foreground/25" aria-hidden="true" />
+            <span>Cloud</span>
+          </div>
         </motion.div>
       </div>
 

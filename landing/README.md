@@ -1,8 +1,6 @@
-# Clouded
+# Clouded Landing
 
-**Your simple cloud note for macOS**
-
-The easiest way to create tasks, check calendar, and brain dump ideas. Simple, beautiful, and powerful productivity for macOS.
+Marketing site for Clouded, the local-first macOS productivity app.
 
 ## Features
 
@@ -76,4 +74,4 @@ public/         Static assets (images, icons, SVGs)
 
 ## License
 
-All rights reserved.
+MIT. See the repository root [LICENSE](../LICENSE).

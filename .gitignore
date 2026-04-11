@@ -18,6 +18,7 @@ xcuserdata/
 landing/node_modules/
 landing/.next/
 landing/out/
+*.tsbuildinfo
 landing/.env
 landing/.env.local
 landing/.env.*.local
@@ -31,3 +32,9 @@ landing/npm-debug.log*
 .idea/
 .vscode/
 *.code-workspace
+
+# Claude Code / OMC
+.omc/
+.omx/
+**/.omc/
+**/.omx/

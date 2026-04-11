@@ -1,15 +1,14 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const geist = Geist({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: 'Clouded - Your Simple Cloud Note for macOS',
   description: 'The easiest way to create tasks, check calendar and brain dump ideas. Simple, beautiful, and powerful note-taking for macOS.',
-  generator: 'v0.app',
+
   icons: {
     icon: [
       {
@@ -36,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="relative font-sans antialiased">
+      <body className={`${geist.className} relative font-sans antialiased`}>
         {children}
         <Analytics />
       </body>
