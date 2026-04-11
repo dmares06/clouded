@@ -172,21 +172,37 @@ export function ProductDemoSection() {
       ref={containerRef}
       className="relative min-h-[150vh] bg-gradient-to-b from-[#a8d4ef] to-background overflow-hidden"
     >
-      {/* Cloud Widget at the very top */}
+      {/* Notch Preview */}
       <div className="sticky top-0 z-20 flex justify-center pt-0">
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex h-[70px] w-[240px] justify-center"
+          className="flex h-[76px] w-[360px] justify-center"
         >
           <div
-            className="flex h-11 items-center gap-2 rounded-b-[22px] bg-primary px-8 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20"
-            aria-label="Cloud notch"
+            className="flex h-14 w-full items-center justify-between rounded-b-[28px] bg-primary/90 px-4 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 backdrop-blur"
+            aria-label="Clouded notch preview"
           >
-            <Cloud className="h-4 w-4 fill-primary-foreground/25" aria-hidden="true" />
-            <span>Cloud</span>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 rounded-full bg-white/14 px-3 py-1.5">
+                <Cloud className="h-4 w-4 fill-primary-foreground/25" aria-hidden="true" />
+                <span>Clouded</span>
+              </div>
+              <div className="flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-primary">
+                <span>🏠</span>
+                <span>Home</span>
+              </div>
+              <div className="hidden items-center gap-1 rounded-full px-3 py-1.5 text-primary-foreground/80 sm:flex">
+                <span>📊</span>
+                <span>Stats</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-primary-foreground/85">
+              <span className="hidden text-xs sm:inline">9 tasks</span>
+              <span className="h-2.5 w-2.5 rounded-full bg-white/90" />
+            </div>
           </div>
         </motion.div>
       </div>

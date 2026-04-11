@@ -98,7 +98,6 @@ export function HeroSection() {
         </motion.p>
 
         {/* CTA Button */}
-<<<<<<< HEAD
         <motion.a
           href="https://github.com/dmares06/clouded/releases/latest/download/Clouded.dmg"
           initial={{ y: 30, opacity: 0 }}
